@@ -6,7 +6,7 @@ import {
   getEntities,
   getPrediction
 } from '@botonic/nlu/lib/prediction'
-
+import { isProd } from './utils'
 global.fetch = fetch
 
 export class NLU {
@@ -32,6 +32,18 @@ export class NLU {
         let nluData = await res.nluData
         let { intentsDict, maxSeqLength, vocabulary, devEntities } =
           this.env.mode === 'node' ? nluData : nluData.data
+        let model = await res.model
+        // console.log('SAVING IN PLUGIN')
+        // await model.save('localstorage://eng')
+        if (!isProd()) {
+          window.models[language].nluData = {
+            language: res.language,
+            intentsDict,
+            maxSeqLength,
+            vocabulary,
+            devEntities
+          }
+        }
         this.models[language] = {
           nluData: {
             language: res.language,
@@ -40,16 +52,23 @@ export class NLU {
             vocabulary,
             devEntities
           },
-          model: await res.model
+          model: model
         }
       }
       return this
     })()
   }
 
-  predict(input) {
+  async predict(input) {
+    let models = null
+    if (isProd()) {
+      models = this.models
+    } else {
+      window.models.eng.model = await window.models.eng.model
+      models = window.models
+    }
     let language = detectLang(input, this.languages)
-    let { model, nluData } = this.models[language]
+    let { model, nluData } = models[language]
     let prediction = getPrediction(input, model, nluData)
     let intent = getIntent(prediction, nluData.intentsDict, language)
     let entities = getEntities(input, nluData.devEntities)

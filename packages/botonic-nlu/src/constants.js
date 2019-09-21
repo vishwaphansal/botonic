@@ -3,6 +3,7 @@ export const LANG_FLAG = '--lang'
 // Filenames
 export const NLU_DATA_FILENAME = 'nlu-data.json'
 export const MODEL_FILENAME = 'model.json'
+export const NLU_METRICS_FILENAME = 'metrics.json'
 // Dirnames
 export const MODELS_DIRNAME = 'models'
 export const UTTERANCES_DIRNAME = 'utterances'

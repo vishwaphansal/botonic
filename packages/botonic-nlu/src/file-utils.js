@@ -8,7 +8,8 @@ import {
   NLU_CONFIG_FILENAME,
   UTTERANCES_DIRNAME,
   MODELS_DIRNAME,
-  NLU_DATA_FILENAME
+  NLU_DATA_FILENAME,
+  NLU_METRICS_FILENAME
 } from './constants'
 
 const FILE_OPEN_EXCEPTION = error => colors.red(`${error}`)
@@ -98,7 +99,13 @@ export function loadDevData(nluPath, languages) {
   return devData
 }
 
-export async function saveDevData({ modelsPath, model, language, nluData }) {
+export async function saveDevData({
+  modelsPath,
+  model,
+  language,
+  nluData,
+  history
+}) {
   let resultsPath = path.join(modelsPath, language)
   if (!pathExists(modelsPath)) {
     createDir(modelsPath)
@@ -111,6 +118,7 @@ export async function saveDevData({ modelsPath, model, language, nluData }) {
   console.log('Saving intents and entities...')
   console.log('Saving word index...')
   writeJSON(`${resultsPath}/${NLU_DATA_FILENAME}`, nluData)
+  writeJSON(`${resultsPath}/${NLU_METRICS_FILENAME}`, history)
   console.log('\n')
 }
 

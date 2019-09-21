@@ -11,7 +11,7 @@ export default class BotonicPluginNLU {
 
   async pre({ input, session, lastRoutePath }) {
     try {
-      let { intent, entities } = this.nlu.predict(input.data)
+      let { intent, entities } = await this.nlu.predict(input.data)
       Object.assign(input, intent, entities)
     } catch (e) {
       console.log('Cannot predict the results', e)

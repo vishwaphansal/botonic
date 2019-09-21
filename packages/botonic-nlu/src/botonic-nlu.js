@@ -97,7 +97,8 @@ export class BotonicNLU {
         modelsPath: this.modelsPath,
         model: this.models[language],
         language,
-        nluData
+        nluData,
+        history
       })
     }
   }

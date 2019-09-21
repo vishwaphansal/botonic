@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect } from 'react'
 import { useWebchat } from './hooks'
 import { Webchat } from './webchat'
 import { SessionView } from './sessionView'
+import { NluMetricsView } from './nluMetricsView'
 
 export const WebchatDev = forwardRef((props, ref) => {
   const webchatHooks = useWebchat()
@@ -45,7 +46,8 @@ export const WebchatDev = forwardRef((props, ref) => {
         }}
         initialDevSettings={{
           keepSessionOnReload: webchatState.devSettings.keepSessionOnReload,
-          showSessionView: webchatState.devSettings.showSessionView
+          showSessionView: webchatState.devSettings.showSessionView,
+          showNluMetricsView: webchatState.devSettings.showNluMetricsView
         }}
       />
       <div
@@ -58,6 +60,7 @@ export const WebchatDev = forwardRef((props, ref) => {
         }}
       >
         <SessionView webchatHooks={webchatHooks} />
+        <NluMetricsView webchatHooks={webchatHooks} />
       </div>
     </div>
   )
