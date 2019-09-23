@@ -28,15 +28,7 @@ export function loadOption(lang, env) {
     nlu.nluData = axios({
       url: `${env.uri}${lang}/${NLU_DATA_FILENAME}`
     })
-    if (isProd()) {
-      nlu.model = tf.loadLayersModel(`${env.uri}${lang}/${MODEL_FILENAME}`)
-    } else {
-      window.models = {}
-      window.models[lang] = {}
-      window.models[lang].model = tf.loadLayersModel(
-        `${env.uri}${lang}/${MODEL_FILENAME}`
-      )
-    }
+    nlu.model = tf.loadLayersModel(`${env.uri}${lang}/${MODEL_FILENAME}`)
   } catch (e) {
     console.log('Cannot retrieve NLU Information', e)
   }
