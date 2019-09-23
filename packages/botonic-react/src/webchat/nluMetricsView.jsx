@@ -14,8 +14,29 @@ import {
 export const NluMetricsView = props => {
   tfvis.visor().close()
   const { webchatState, updateDevSettings } = props.webchatHooks || useWebchat()
-  const [data, setData] = useState({ metrics: {}, model: {}, nluData: {} })
+  const [data, setData] = useState({ metrics: {} })
+  const [currentLang, setCurrentLang] = useState('')
   const [input, setInput] = useState('')
+
+  const loadNluData = async languages => {
+    for (let lang of languages) {
+      let nluDataUrl = `${window.location.href}${lang}`
+      const resMetrics = await axios(`${nluDataUrl}/metrics.json`)
+      data.metrics[lang] = resMetrics.data
+      setData({
+        metrics: data.metrics,
+        languages: Object.keys(window.models)
+      })
+    }
+  }
+
+  useEffect(() => {
+    // Right now, in this way we assure that the languages are available when rendering the component
+    setTimeout(() => {
+      let languages = Object.keys(window.models)
+      loadNluData(languages)
+    }, 1000)
+  }, [])
 
   const toggleNluMetricsView = () => {
     updateDevSettings({
@@ -24,30 +45,18 @@ export const NluMetricsView = props => {
     })
   }
   const toXY = (v, i) => ({ x: i + 1, y: v })
-  const loadNluData = async () => {
-    let nluDataUrl = `${window.location.href}eng`
-    const resMetrics = await axios(`${nluDataUrl}/metrics.json`)
-    const resNluData = await axios(`${nluDataUrl}/nlu-data.json`)
-    const resModel = await window.models.eng.model
-    setData({
-      ...resMetrics.data,
-      nluData: resNluData.data,
-      model: resModel
-    })
-  }
-
-  useEffect(() => {
-    loadNluData()
-  }, [])
 
   const plotModelSummary = () => {
     const modelInspectorSurface = {
       name: 'Model Summary',
       tab: 'Model Inspection'
     }
-    tfvis.show.modelSummary(modelInspectorSurface, data.model)
+    tfvis.show.modelSummary(
+      modelInspectorSurface,
+      window.models[currentLang].model
+    )
     tfvis.visor().setActiveTab('Model Inspection')
-    tfvis.visor().toggle()
+    tfvis.visor().open()
   }
 
   const plotAccuracy = () => {
@@ -55,15 +64,15 @@ export const NluMetricsView = props => {
       name: 'Accuracy vs Validation Accuracy',
       tab: 'Acc vs. Val Acc'
     }
-    const accData = data.history.acc.map(toXY)
-    const valAccData = data.history.val_acc.map(toXY)
+    const accData = data.metrics[currentLang].history.acc.map(toXY)
+    const valAccData = data.metrics[currentLang].history.val_acc.map(toXY)
     const accValAccData = {
       values: [accData, valAccData],
       labels: ['Acc', 'Val Acc']
     }
     tfvis.render.linechart(accuracySurface, accValAccData, { zoomToFit: true })
     tfvis.visor().setActiveTab('Acc vs. Val Acc')
-    tfvis.visor().toggle()
+    tfvis.visor().open()
   }
 
   const plotLoss = () => {
@@ -71,23 +80,31 @@ export const NluMetricsView = props => {
       name: 'Loss vs Validation Loss',
       tab: 'Loss vs. Val Loss'
     }
-    const lossData = data.history.loss.map(toXY)
-    const valLossData = data.history.val_loss.map(toXY)
+    const lossData = data.metrics[currentLang].history.loss.map(toXY)
+    const valLossData = data.metrics[currentLang].history.val_loss.map(toXY)
     const lossValLossData = {
       values: [lossData, valLossData],
       labels: ['Loss', 'Val Loss']
     }
     tfvis.render.linechart(lossSurface, lossValLossData, { zoomToFit: true })
     tfvis.visor().setActiveTab('Loss vs. Val Loss')
-    tfvis.visor().toggle()
+    tfvis.visor().open()
   }
+
   const testInput = () => {
-    const inputObj = {
-      'Test input': input
-    }
     if (input !== '') {
-      let prediction = getPrediction(input, data.model, data.nluData)
-      let intent = getIntent(prediction, data.nluData.intentsDict, 'eng')
+      let detectedLang = detectLang(input, data.languages)
+      console.log(detectedLang, 'detected')
+      let prediction = getPrediction(
+        input,
+        window.models[detectedLang].model,
+        window.models[detectedLang].nluData
+      )
+      let intent = getIntent(
+        prediction,
+        window.models[detectedLang].nluData.intentsDict,
+        detectedLang
+      )
       alert(JSON.stringify(intent))
     }
   }
@@ -129,14 +146,15 @@ export const NluMetricsView = props => {
           >
             Botonic NLU Metrics
           </h1>
-          {Object.keys(data.model).length == 0 ? (
+          {Object.keys(window.models).length == 0 ? (
             <Flex
+              flexDirection='column'
               style={{
                 justifyContent: 'center'
               }}
               width={1}
             >
-              <h3 style={{ color: 'red' }}>Data not loaded</h3>
+              <h3 style={{ color: 'white' }}>Loading NLU Data...</h3>
             </Flex>
           ) : (
             <>
@@ -146,18 +164,29 @@ export const NluMetricsView = props => {
                 style={{ background: '#0c2a34' }}
               >
                 <h3 style={{ color: 'green' }}>NLU Data Loaded</h3>
+                <h4 style={{ color: 'white' }}>
+                  lang: {currentLang == '' ? 'Select a Lang' : currentLang}
+                </h4>
+                <Flex justifyContent='center'>
+                  {data.languages &&
+                    data.languages.map((lang, i) => (
+                      <button key={i} onClick={() => setCurrentLang(lang)}>
+                        {lang}
+                      </button>
+                    ))}
+                </Flex>
                 <button onClick={() => plotModelSummary()}>
                   Model Summary
                 </button>
                 <button onClick={() => plotAccuracy()}>Accuracy Plot</button>
                 <button onClick={() => plotLoss()}>Loss Plot</button>
-                <hr />
+                <h3 style={{ color: 'white' }}>Test your input:</h3>
                 <input
                   type='text'
                   placeholder='Test input'
                   onChange={e => setInput(e.target.value)}
                 />
-                <button onClick={testInput}>Submit</button>
+                <button onClick={testInput}>Test!</button>
               </Flex>
             </>
           )}
@@ -166,7 +195,11 @@ export const NluMetricsView = props => {
         <Flex
           style={{
             background:
-              Object.keys(data.model).length == 0 ? '#ff0000' : '#00ff00',
+              Object.keys(window.models).length == 0 &&
+              data.languages &&
+              Object.keys(data.languages)
+                ? '#ff0000'
+                : '#00ff00',
             justifyContent: 'center',
             width: 32,
             height: 30,
