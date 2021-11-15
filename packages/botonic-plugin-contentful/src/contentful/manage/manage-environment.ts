@@ -27,7 +27,7 @@ export class ManageEnvironment {
     })
   }
 
-  public async getSpace(): Promise<Space> {
+  private async getSpace(): Promise<Space> {
     return await this.manage.getSpace(this.options.spaceId)
   }
 
@@ -35,6 +35,10 @@ export class ManageEnvironment {
     Collection<Environment, EnvironmentProps>
   > {
     return await (await this.space).getEnvironments()
+  }
+
+  public async getEnvironment(environmentId: string): Promise<Environment> {
+    return await (await this.space).getEnvironment(environmentId)
   }
 
   public async deleteEnvironment(environmentId: string): Promise<void> {
