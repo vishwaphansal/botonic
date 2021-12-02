@@ -15,7 +15,6 @@
     "@babel/runtime": "^7.16.0",
     "axios": "^0.24.0"
   },
-  "devDependencies": {},
   "keywords": [
     "bot-framework",
     "chatbot",

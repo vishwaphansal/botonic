@@ -15,7 +15,6 @@
     "axios": "^0.24.0",
     "uuid": "^8.2.0"
   },
-  "devDependencies": {},
   "keywords": [
     "analytics",
     "bot-framework",

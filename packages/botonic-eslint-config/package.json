@@ -3,7 +3,6 @@
   "version": "1.0.0-dev.0",
   "description": "Eslint config for botonic packages",
   "main": "index.js",
-  "scripts": {},
   "author": "",
   "license": "MIT",
   "keywords": [

@@ -15,7 +15,6 @@
     "axios": "0.24.0",
     "btoa": "^1.2.1"
   },
-  "devDependencies": {},
   "keywords": [
     "analytics",
     "bot-framework",

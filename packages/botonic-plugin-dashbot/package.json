@@ -15,7 +15,6 @@
     "axios": "0.24.0",
     "dashbot": "^11.1.0"
   },
-  "devDependencies": {},
   "keywords": [
     "bot-framework",
     "chatbot",

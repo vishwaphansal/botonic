@@ -2,7 +2,6 @@
   "name": "@botonic/dx",
   "version": "1.0.0-dev.0",
   "description": "Continuous integration for botonic packages",
-  "scripts": {},
   "author": "",
   "license": "MIT",
   "keywords": [
@@ -79,7 +78,6 @@
     "README.md",
     "baseline/*",
     "sample-config/*",
-    "botonic-app-config/*",
-    "README.md"
+    "botonic-app-config/*"
   ]
 }
