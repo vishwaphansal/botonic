@@ -79,5 +79,8 @@
     "baseline/*",
     "sample-config/*",
     "botonic-app-config/*"
-  ]
+  ],
+  "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json"
+  }
 }

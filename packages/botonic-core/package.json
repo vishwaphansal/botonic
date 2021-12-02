@@ -6,6 +6,7 @@
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json",
     "test": "../../node_modules/.bin/jest --coverage",
     "prepare": "node ../../preinstall.js",
     "prepublishOnly": "rm -rf lib && npm run build",

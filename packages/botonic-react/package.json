@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "types": "./index.d.ts",
   "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json",
     "test": "../../node_modules/.bin/jest --coverage",
     "cloc": "../../scripts/qa/cloc-package.sh .",
     "prepare": "node ../../preinstall.js",

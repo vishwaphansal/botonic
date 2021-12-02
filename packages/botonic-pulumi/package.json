@@ -2,6 +2,7 @@
   "name": "@botonic/pulumi",
   "version": "1.0.0-dev.0",
   "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json",
     "prepublishOnly": "npm run build",
     "build": "rm -rf lib && ../../node_modules/.bin/tsc",
     "build:watch": "rm -rf lib && ../../node_modules/.bin/tsc -w",

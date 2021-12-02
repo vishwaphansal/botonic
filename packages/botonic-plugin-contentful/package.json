@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json",
     "build": "rm -rf lib && ../../node_modules/.bin/tsc",
     "build:watch": "npm run build -- --watch",
     "build_unit_tests": "tsc -b tests/tsconfig.json",

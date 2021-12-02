@@ -32,5 +32,8 @@
     "index.js",
     "index-ci.js",
     "README.md"
-  ]
+  ],
+  "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json"
+  }
 }

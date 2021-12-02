@@ -4,6 +4,7 @@
   "license": "MIT",
   "main": "src/index.js",
   "scripts": {
+    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json",
     "build": "echo Nothing to build",
     "prepare": "node ../../preinstall.js",
     "lint": "npm run lint_core -- --fix",
