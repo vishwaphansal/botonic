@@ -1,23 +1,5 @@
 {
-  "license": "MIT",
-  "name": "botonic",
-  "packageManager": "yarn@3.1.1",
   "private": true,
-  "workspacesx": [
-    "packages/botonic-*"
-  ],
-  "workspaces": [
-    "packages/botonic-cli",
-    "packages/botonic-core",
-    "packages/botonic-dx",
-    "packages/botonic-eslint-config",
-    "packages/botonic-nlp"
-  ],
-  "scripts": {
-    "build": "yarn workspaces foreach -ptv run build",
-    "clean": "yarn workspaces foreach -ptv exec rm -rf package-lock.json lib;",
-    "install:clean": "rm -rf node_modules yarn.lock; yarn install;"
-  },
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.1",
@@ -45,13 +27,18 @@
     "jest-expect-message": "^1.0.2",
     "jest-junit": "^12.0.0",
     "prettier": "^2.2.1",
-    "rimraf": "^3.0.2",
     "ts-jest": "^26.5.6",
     "ts-mockito": "^2.6.1",
     "ts-node": "^9.1.1",
     "tslib": "^2.2.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.3.2"
   },
-  "version": "1.0.0-dev.2",
-  "stableVersion": "1.0.0"
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "packages/botonic-*"
+  ],
+  "dependencies": {}
 }

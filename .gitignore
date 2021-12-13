@@ -25,3 +25,4 @@ packages/botonic-cli/botonic-tmp*
 .vscode
 docs/website/package-lock.json
 *.tsbuildinfo
+.yarn
