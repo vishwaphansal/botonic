@@ -10,7 +10,6 @@
     "README.md"
   ],
   "scripts": {
-    "clean": "../../node_modules/rimraf/bin.js node_modules lib package-lock.json",
     "build": "rm -rf lib && ../../node_modules/.bin/tsc",
     "lint": "npm run lint_core -- --fix",
     "lint_ci": "npm run lint_core -- -c ../.eslintrc_slow.js",

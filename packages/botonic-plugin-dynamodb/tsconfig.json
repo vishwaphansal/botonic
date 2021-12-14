@@ -25,6 +25,7 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "skipLibCheck": true,
 
     // options for dynamo-data-mapper-annotations
     "experimentalDecorators": true,

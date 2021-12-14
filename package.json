@@ -3,28 +3,35 @@
   "name": "botonic",
   "packageManager": "yarn@3.1.1",
   "private": true,
-  "workspacesx": [
-    "packages/botonic-*"
-  ],
   "workspaces": [
-    "packages/botonic-cli",
     "packages/botonic-core",
     "packages/botonic-dx",
-    "packages/botonic-eslint-config",
-    "packages/botonic-nlp"
+    "packages/botonic-nlp",
+    "packages/botonic-plugin-contentful",
+    "packages/botonic-plugin-dashbot",
+    "packages/botonic-plugin-dynamodb",
+    "packages/botonic-plugin-google-analytics",
+    "packages/botonic-plugin-google-translation",
+    "packages/botonic-plugin-inbenta",
+    "packages/botonic-plugin-luis",
+    "packages/botonic-plugin-segment",
+    "packages/botonic-plugin-watson",
+    "packages/botonic-pulumi",
+    "packages/botonic-server"
   ],
   "scripts": {
     "build": "yarn workspaces foreach -ptv run build",
+    "lint": "yarn workspaces foreach -ptv run lint",
     "clean": "yarn workspaces foreach -ptv exec rm -rf package-lock.json lib;",
     "install:clean": "rm -rf node_modules yarn.lock; yarn install;"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.1",
     "@types/rimraf": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
-    "babel-eslint": "^10.1.0",
     "cloc": "^2.7.0",
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^7.2.0",

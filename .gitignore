@@ -7,7 +7,6 @@ lib/
 node_modules/
 tmp/
 .DS_Store
-yarn.lock
 .yarn-metadata.json
 .nyc_output/
 dist/
@@ -25,4 +24,4 @@ packages/botonic-cli/botonic-tmp*
 .vscode
 docs/website/package-lock.json
 *.tsbuildinfo
-.yarn
+.yarn/
