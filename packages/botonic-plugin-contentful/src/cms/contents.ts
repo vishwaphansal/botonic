@@ -505,6 +505,17 @@ export class Handoff extends TopContent {
   }
 }
 
+export class Input extends TopContent {
+  constructor(
+    readonly common: CommonFields,
+    readonly shortText: string,
+    readonly keywords: string[],
+    readonly target: OnFinish
+  ) {
+    super(common, ContentType.INPUT)
+  }
+}
+
 /**
  * A {@link Content} which is automatically displayed after another one
  */
