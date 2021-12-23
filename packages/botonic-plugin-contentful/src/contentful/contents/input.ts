@@ -1,7 +1,7 @@
 import * as contentful from 'contentful'
 
 import * as cms from '../../cms'
-import { CmsException, Context, OnFinish } from '../../cms'
+import { CmsException, Context, InputType, OnFinish } from '../../cms'
 import { TopContentDelivery } from '../content-delivery'
 import { DeliveryApi } from '../delivery-api'
 import {
@@ -36,7 +36,8 @@ export class InputDelivery extends TopContentDelivery {
         common,
         fields.shortText,
         fields.keywords,
-        this.target(entry, context)
+        this.target(entry, context),
+        fields.type
       ),
       entry.fields
     )
@@ -58,6 +59,7 @@ export interface InputFields extends CommonEntryFields {
   shortText: string
   keywords: string[]
   target: InputTarget
+  type: InputType
 }
 
 export type InputTarget = contentful.Entry<

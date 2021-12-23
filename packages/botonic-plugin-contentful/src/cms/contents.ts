@@ -510,10 +510,16 @@ export class Input extends TopContent {
     readonly common: CommonFields,
     readonly shortText: string,
     readonly keywords: string[],
-    readonly target: OnFinish
+    readonly target: OnFinish,
+    readonly type = InputType.KEYWORDS
   ) {
     super(common, ContentType.INPUT)
   }
+}
+
+export enum InputType {
+  INTENTS = 'Intents',
+  KEYWORDS = 'Keywords',
 }
 
 /**
